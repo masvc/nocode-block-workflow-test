@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🧱 ワークフロービルダー</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- ヘッダー -->
+      <header class="header">
+        <div class="header-content">
+          <h1>🧱 ワークフロービルダー</h1>
+          <div class="header-controls">
+            <button class="btn btn-primary" onclick="saveWorkflow()">
+              💾 保存
+            </button>
+            <button class="btn btn-secondary" onclick="loadWorkflow()">
+              📂 読込
+            </button>
+            <button class="btn btn-danger" onclick="clearCanvas()">
+              🗑️ クリア
+            </button>
+            <button class="btn btn-success" onclick="exportJSON()">
+              📤 JSON出力
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="main-layout">
+        <!-- ブロックパレット -->
+        <aside class="block-palette">
+          <h3>🎨 ブロックパレット</h3>
+          <div class="palette-section">
+            <h4>⚡ アクション</h4>
+            <div class="palette-blocks" id="actionBlocks"></div>
+          </div>
+          <div class="palette-section">
+            <h4>🔄 制御</h4>
+            <div class="palette-blocks" id="controlBlocks"></div>
+          </div>
+          <div class="palette-section">
+            <h4>📊 データ</h4>
+            <div class="palette-blocks" id="dataBlocks"></div>
+          </div>
+          <div class="palette-section">
+            <h4>🔗 統合</h4>
+            <div class="palette-blocks" id="integrationBlocks"></div>
+          </div>
+        </aside>
+
+        <!-- メインワークスペース -->
+        <main class="workspace">
+          <div class="workspace-header">
+            <h3>🎯 ワークスペース</h3>
+            <div class="workspace-info">
+              <span id="blockCount">ブロック数: 0</span>
+              <span id="connectionCount">接続数: 0</span>
+            </div>
+          </div>
+          <div class="canvas-container">
+            <div class="canvas" id="canvas">
+              <div class="canvas-grid"></div>
+              <svg class="connection-svg" id="connectionSvg"></svg>
+              <div class="welcome-message">
+                <div class="welcome-icon">🧱</div>
+                <h3>ワークフローを組み立てよう！</h3>
+                <p>
+                  左のパレットからブロックをドラッグして、ここにドロップしてください
+                </p>
+                <p><small>💡 ブロックの○をクリックして接続できます</small></p>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- プロパティパネル -->
+        <aside class="properties-panel">
+          <h3>⚙️ プロパティ</h3>
+          <div id="propertiesContent">
+            <div class="no-selection">
+              <p>ブロックを選択してプロパティを編集</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- 接続モード表示 -->
+      <div class="connection-mode-indicator" id="connectionModeIndicator">
+        🔗 接続モード - 次のブロックをクリック
+      </div>
+
+      <!-- フローティング実行ボタン -->
+      <div class="floating-controls">
+        <button
+          class="floating-btn play-btn"
+          onclick="executeWorkflow()"
+          title="ワークフロー実行"
+        >
+          ▶️
+        </button>
+        <button
+          class="floating-btn zoom-in-btn"
+          onclick="zoomIn()"
+          title="ズームイン"
+        >
+          🔍+
+        </button>
+        <button
+          class="floating-btn zoom-out-btn"
+          onclick="zoomOut()"
+          title="ズームアウト"
+        >
+          🔍-
+        </button>
+      </div>
+
+      <!-- モーダル -->
+      <div id="jsonModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>JSON出力</h3>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body">
+            <textarea id="jsonOutput" readonly></textarea>
+            <button class="btn btn-primary" onclick="copyJSON()">
+              📋 コピー
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 実行結果表示 -->
+      <div id="executionPanel" class="execution-panel">
+        <div class="execution-header">
+          <h3>🚀 実行結果</h3>
+          <button onclick="closeExecution()">&times;</button>
+        </div>
+        <div id="executionContent" class="execution-content"></div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
